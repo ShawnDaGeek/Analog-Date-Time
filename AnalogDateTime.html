@@ -12,7 +12,6 @@ let todayD = weekday[dDay.getDay()];
 let todayMonth = dDay.getMonth();
 let dayOfMonth = dDay.getDay();
 let monthAbbr = thismonth[todayMonth];
-
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 let radius = canvas.height / 2;
@@ -24,7 +23,6 @@ setInterval(drawClock, 1000);
 function daysInMonth(anyDateInMonth) {
     return new Date(anyDateInMonth.getFullYear(),anyDateInMonth.getMonth()+1,0).getDate();
 }
-
 const dim = daysInMonth(dDay)
 function drawClock() {   
   drawFace(ctx, radius);  
@@ -50,7 +48,7 @@ function drawDateFace(ctx, radius) {
   ctx.arc(0, 0, radius, 0, 2*Math.PI);
   ctx.fillStyle = 'transparent';
   ctx.fill();    
-  
+  //
   ctx.strokeStyle = grad;
   ctx.lineWidth = radius*0.005;
   ctx.stroke();
@@ -58,7 +56,7 @@ function drawDateFace(ctx, radius) {
   ctx.arc(0, 0, radius*0.215, 0, 2*Math.PI);
   ctx.fillStyle = 'transparent';
   ctx.fill();
-  
+  //
   ctx.globalAlpha = 0.55;
   ctx.strokeStyle = grad;
   ctx.lineWidth = radius*0.005;
@@ -68,21 +66,20 @@ function drawDateFace(ctx, radius) {
   ctx.fillStyle = 'transparent';
   ctx.fill();
   ctx.globalAlpha = 1;
-
 }
 function drawFace(ctx, radius) {
   const grad = ctx.createRadialGradient(0,0,radius*0.85, 0,0,radius*0.65);
   grad.addColorStop(0, '#555');
   grad.addColorStop(0.5, '#999');
   grad.addColorStop(1, '#555');
-    ctx.strokeStyle = grad;
+  ctx.strokeStyle = grad;
   ctx.lineWidth = radius*0.0015;
   ctx.stroke();
   ctx.beginPath();
   ctx.arc(0, 0, radius, 0, 2*Math.PI);
   ctx.fillStyle = '#777';
   ctx.fill();
-  
+  //
   ctx.strokeStyle = grad;
   ctx.lineWidth = radius*0.0015;
   ctx.stroke();
@@ -90,7 +87,7 @@ function drawFace(ctx, radius) {
   ctx.arc(0, 0, radius*0.655, 0, 2*Math.PI);
   ctx.fillStyle = '#777';
   ctx.fill(); 
-  
+  //
   ctx.strokeStyle = grad;
   ctx.lineWidth = radius*0.0125;
   ctx.stroke();
@@ -98,22 +95,13 @@ function drawFace(ctx, radius) {
   ctx.arc(0, 0, radius*0.555, 0, 2*Math.PI);
   ctx.fillStyle = '#777';
   ctx.fill();
-
 }
-function drawFrontFace(ctx, radius) {
-    
-   const grad = ctx.createRadialGradient(0,0,radius*0.85, 0,0,radius*0.65);
+function drawFrontFace(ctx, radius) {    
+  const grad = ctx.createRadialGradient(0,0,radius*0.85, 0,0,radius*0.65);
   grad.addColorStop(0, '#555');
   grad.addColorStop(0.5, '#999');
   grad.addColorStop(1, '#555');
-/*     ctx.strokeStyle = grad;
-  ctx.lineWidth = radius*0.0015;
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.arc(0, 0, radius, 0, 2*Math.PI);
-  ctx.fillStyle = '#777';
-  ctx.fill();  */ 
-    ctx.globalAlpha = 0.85;
+  ctx.globalAlpha = 0.85;
   ctx.strokeStyle = grad;
   ctx.lineWidth = radius*0.0225;
   ctx.stroke();
@@ -121,15 +109,14 @@ function drawFrontFace(ctx, radius) {
   ctx.arc(0, 0, radius*0.675, 0, 2*Math.PI);
   ctx.fillStyle = '#777';
   ctx.fill();
-      ctx.globalAlpha = 1;
+  ctx.globalAlpha = 1;
 }
 function drawNumbersDay(ctx, radius) {
   ctx.font = "bolder " + radius*0.0725 + "px arial";
   ctx.textBaseline="middle";
   ctx.textAlign="center";
   ctx.fillStyle = 'darkorange';
-  for(let num = 1; num < 8; num++){
-      
+  for(let num = 1; num < 8; num++){      
     let ang = num * Math.PI / 3.5;
     ctx.rotate(ang);
     ctx.translate(0, -radius*0.345);
@@ -169,8 +156,7 @@ function drawNumbersMonth(ctx, radius) {
         var pref = "rd";
     } else if(num === 4 || num > 4 && num != 31){
         var pref = "th";
-    } else {
-        
+    } else {        
     }
     ctx.rotate(ang);
     ctx.translate(0, -radius*0.595);
@@ -181,38 +167,16 @@ function drawNumbersMonth(ctx, radius) {
     ctx.rotate(-ang);
   }  
 }
-
 function drawNumbers(ctx, radius) {
   ctx.font = "bolder " + radius*0.0825 + "px arial";
   ctx.textBaseline="middle";
   ctx.textAlign="center";
   ctx.fillStyle = 'lightblue';
-  
-/*   for(let num = 1; num < 49; num++){
-    let ang = num * Math.PI / 24;
-    ctx.rotate(ang);
-    ctx.translate(0, -radius*0.715);
-    ctx.rotate(-ang);
-    var isOdd = num % 2 !== 0;
-    if (isOdd==true){
-       ctx.fillText("*", 0, 0); 
-    }
-    //ctx.fillText(num.toString(), 0, 0);
-    ctx.rotate(ang);
-    ctx.translate(0, radius*0.715);
-    ctx.rotate(-ang);
-  }
-
-   */
   for(let num = 1; num < 25; num++){
     let ang = num * Math.PI / 12;
     ctx.rotate(ang);
     ctx.translate(0, -radius*0.725);
     ctx.rotate(-ang);
-        //if(num % 3 == 0 && num != 0) { // col != 0 to not write "New Row" for first row, if you want on first row remove that condition
-          //console.log("New Row");
-          //ctx.fillText("*", 0, 0);
-        //}
     var isOdd = num % 2 !== 0;
     if (isOdd==true){
        ctx.fillText("*", 0, 0); 
@@ -225,7 +189,6 @@ function drawNumbers(ctx, radius) {
   ctx.textBaseline="middle";
   ctx.textAlign="center";
   ctx.fillStyle = 'lightblue';
-
   for(let num = 1; num < 13; num++){
     let ang = num * Math.PI / 6;
     ctx.rotate(ang);
@@ -241,8 +204,7 @@ function drawNumbers24(ctx, radius) {
   ctx.font = "bold " + radius*0.085 + "px arial";
   ctx.textBaseline="middle";
   ctx.textAlign="center";
-  ctx.fillStyle = 'pink';
-  
+  ctx.fillStyle = 'pink';  
   for(let num = 1; num < 49; num++){
     let ang = num * Math.PI / 24;
     ctx.rotate(ang);
@@ -252,7 +214,6 @@ function drawNumbers24(ctx, radius) {
     if (isOdd==true){
        ctx.fillText("*", 0, 0); 
     }
-    //ctx.fillText(num.toString(), 0, 0);
     ctx.rotate(ang);
     ctx.translate(0, radius*0.835);
     ctx.rotate(-ang);
@@ -348,9 +309,7 @@ function drawTime(ctx, radius){
     const dDay = new Date();
     const dMon = new Date();
     dMonth = dMon.getMonth()+1;
-    dDayD = dDay.getDate();
-    
-
+    dDayD = dDay.getDate(); 
     //hour
      hourR=(hour*Math.PI/12)+
     (minute*Math.PI/(12*60))+
@@ -368,8 +327,6 @@ function drawTime(ctx, radius){
     // second
     second=(second*Math.PI/30);
     drawHand(ctx, second, radius*0.95, radius*0.0725, 'lightgreen');
-
-
 }
 function drawHand(ctx, pos, length, width, fill) {
     let mToPos = length / 2;
