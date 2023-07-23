@@ -4,7 +4,6 @@
 //
 //
 //
-
 const thismonth = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 const dDay = new Date();
@@ -16,7 +15,6 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 let radius = canvas.height / 2;
 let radius24 = canvas.height / 2;
-//radius24 = radius24 / 2;
 ctx.translate(radius24, radius24);
 radius = radius * 0.975
 setInterval(drawClock, 1000);
@@ -41,22 +39,20 @@ function drawDateFace(ctx, radius) {
   grad.addColorStop(0, '#555');
   grad.addColorStop(0.5, '#999');
   grad.addColorStop(1, '#555');
-    ctx.strokeStyle = grad;
+  ctx.strokeStyle = grad;
   ctx.lineWidth = radius*0.005;
   ctx.stroke();
   ctx.beginPath();
   ctx.arc(0, 0, radius, 0, 2*Math.PI);
   ctx.fillStyle = 'transparent';
-  ctx.fill();    
-  //
+  ctx.fill();  
   ctx.strokeStyle = grad;
   ctx.lineWidth = radius*0.005;
   ctx.stroke();
   ctx.beginPath();
   ctx.arc(0, 0, radius*0.215, 0, 2*Math.PI);
   ctx.fillStyle = 'transparent';
-  ctx.fill();
-  //
+  ctx.fill();  
   ctx.globalAlpha = 0.55;
   ctx.strokeStyle = grad;
   ctx.lineWidth = radius*0.005;
@@ -69,25 +65,23 @@ function drawDateFace(ctx, radius) {
 }
 function drawFace(ctx, radius) {
   const grad = ctx.createRadialGradient(0,0,radius*0.85, 0,0,radius*0.65);
-  grad.addColorStop(0, '#555');
-  grad.addColorStop(0.5, '#999');
-  grad.addColorStop(1, '#555');
+  grad.addColorStop(0, '#ccc');
+  grad.addColorStop(0.5, '#ddd');
+  grad.addColorStop(1, '#eee');
   ctx.strokeStyle = grad;
   ctx.lineWidth = radius*0.0015;
   ctx.stroke();
   ctx.beginPath();
   ctx.arc(0, 0, radius, 0, 2*Math.PI);
   ctx.fillStyle = '#777';
-  ctx.fill();
-  //
+  ctx.fill();  
   ctx.strokeStyle = grad;
   ctx.lineWidth = radius*0.0015;
   ctx.stroke();
   ctx.beginPath();
   ctx.arc(0, 0, radius*0.655, 0, 2*Math.PI);
-  ctx.fillStyle = '#777';
-  ctx.fill(); 
-  //
+  ctx.fillStyle = '#888';
+  ctx.fill();  
   ctx.strokeStyle = grad;
   ctx.lineWidth = radius*0.0125;
   ctx.stroke();
@@ -156,7 +150,8 @@ function drawNumbersMonth(ctx, radius) {
         var pref = "rd";
     } else if(num === 4 || num > 4 && num != 31){
         var pref = "th";
-    } else {        
+    } else {
+        
     }
     ctx.rotate(ang);
     ctx.translate(0, -radius*0.595);
@@ -167,6 +162,7 @@ function drawNumbersMonth(ctx, radius) {
     ctx.rotate(-ang);
   }  
 }
+
 function drawNumbers(ctx, radius) {
   ctx.font = "bolder " + radius*0.0825 + "px arial";
   ctx.textBaseline="middle";
@@ -177,6 +173,7 @@ function drawNumbers(ctx, radius) {
     ctx.rotate(ang);
     ctx.translate(0, -radius*0.725);
     ctx.rotate(-ang);
+
     var isOdd = num % 2 !== 0;
     if (isOdd==true){
        ctx.fillText("*", 0, 0); 
@@ -212,8 +209,9 @@ function drawNumbers24(ctx, radius) {
     ctx.rotate(-ang);
     var isOdd = num % 2 !== 0;
     if (isOdd==true){
-       ctx.fillText("*", 0, 0); 
+       ctx.fillText("*", 0, 0);       
     }
+    //ctx.fillText(num.toString(), 0, 0);
     ctx.rotate(ang);
     ctx.translate(0, radius*0.835);
     ctx.rotate(-ang);
@@ -275,27 +273,37 @@ function drawDateTime(ctx, radius){
     const dMon = new Date();
     dMonth = dMon.getMonth()+1;
     dDayD = dDay.getDate();
-
+    //
     dayMonth = (dDayD * Math.PI / (dim/2));
     drawHand(nowctx, dayMonth, radius*0.615, radius*0.0775, 'red');
-    
+    //
     dayMonth = (dMonth * Math.PI / 6);
     drawHand(nowctx, dayMonth, radius*0.4975, radius*0.0875, 'green');
-    
+    //
     dayWeek = ((dDay.getDay()+1) * Math.PI / 3.5);
     drawHand(nowctx, dayWeek, radius*0.395, radius*0.0975, 'orange');
-    
+    //
     const nowd = new Date();
     let hourd = nowd.getHours();
     let minuted = nowd.getMinutes();
     let secondd = nowd.getSeconds();
     const number = secondd;
     const paddedNumber = padDigits(secondd, 2);
-    ctx.fillStyle = '#222';
-    ctx.font = "bolder " + radius*0.0895 + "px arial";
-    ctx.fillText(nowd.toDateString(), 0, -35);
-    ctx.font = "bolder " + radius*0.0915 + "px arial";
-    ctx.fillText(''+padDigits(hourd, 2)+':'+padDigits(minuted, 2)+':'+padDigits(secondd, 2), 0, 40);
+    var canvas = document.getElementById('canvas');
+    context = canvas.getContext('2d');
+    centerX = canvas.width / 2;
+    centerY = canvas.height - 30;
+    angle = Math.PI * 0.975;
+    radius = radius;
+    ctx.fillStyle = '#bbb';
+    ctx.font = "bold " + radius*0.0775 + "px arial";
+    drawTextAlongArc(context, nowd.toDateString(), 0, 0, radius*0.2525, angle);
+    angle = Math.PI * 0.575;
+    radius = radius;
+    ctx.fillStyle = '#ccc';
+    ctx.font = "bolder " + radius*0.0865 + "px arial";
+    var timetext = ''+padDigits(hourd, 2)+':'+padDigits(minuted, 2)+':'+padDigits(secondd, 2);
+    drawTextAlongArc(context, timetext, 0, 0, -radius*0.2625, -angle);
     ctx.fill();
 }
 function drawTime(ctx, radius){
@@ -309,7 +317,7 @@ function drawTime(ctx, radius){
     const dDay = new Date();
     const dMon = new Date();
     dMonth = dMon.getMonth()+1;
-    dDayD = dDay.getDate(); 
+    dDayD = dDay.getDate();
     //hour
      hourR=(hour*Math.PI/12)+
     (minute*Math.PI/(12*60))+
@@ -326,7 +334,7 @@ function drawTime(ctx, radius){
     drawHand(ctx, minute, radius*0.95, radius*0.0725, 'lightgreen');
     // second
     second=(second*Math.PI/30);
-    drawHand(ctx, second, radius*0.95, radius*0.0725, 'lightgreen');
+    drawHand(ctx, second, radius*0.95, radius*0.0725, 'white');
 }
 function drawHand(ctx, pos, length, width, fill) {
     let mToPos = length / 2;
@@ -341,5 +349,21 @@ function drawHand(ctx, pos, length, width, fill) {
     ctx.stroke();
     ctx.rotate(-pos); 
     ctx.globalAlpha = 1;
+}
+function drawTextAlongArc(context, str, centerX, centerY, radius, angle) {
+        var len = str.length, s;
+        context.save();
+        context.translate(centerX, centerY);
+        context.rotate(-1 * angle / 2);
+        context.rotate(-1 * (angle / len) / 2);
+        for(var n = 0; n < len; n++) {
+          context.rotate(angle / len);
+          context.save();
+          context.translate(0, -1 * radius);
+          s = str[n];
+          context.fillText(s, 0, 0);
+          context.restore();
+        }
+        context.restore();
 }
 </script>
